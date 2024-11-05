@@ -3,12 +3,28 @@ package main
 import (
 	"fmt"
 	"gorm_crud/migrations"
+	"log"
 
+	"github.com/spf13/viper"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )
 
 func main() {
+	// set the name of the configuration file
+	viper.SetConfigFile("config")
+	viper.AddConfigPath("./config")
+	viper.AutomaticEnv()
+
+	err := viper.ReadInConfig()
+
+	if err != nil {
+		log.Fatalf("Error reading config file, %s", err)
+	}
+
+	host := viper.GetString("server.host")
+
+	fmt.Printf("server: %s:%d\n", host, 8080)
 	// Initialize a connection to the SQLite database
 	db, err := gorm.Open(sqlite.Open("gorm.db"), &gorm.Config{})
 	if err != nil {
