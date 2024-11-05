@@ -12,7 +12,7 @@ import (
 
 func main() {
 	// set the name of the configuration file
-	viper.SetConfigFile("config")
+	viper.SetConfigName("config")
 	viper.AddConfigPath("./config")
 	viper.AutomaticEnv()
 
